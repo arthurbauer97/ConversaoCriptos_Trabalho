@@ -3,9 +3,12 @@ package com.example.conversaocriptos;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +21,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTvEth;
     private TextView mTvLtc;
     private TextView mTvXrp;
+    private Button mBtn;
     private ArrayList<Coin> cotacaoes;
-
+    private  Coin  mBTC;
+    private Coin  mETH;
+   private Coin  mLTC ;
+    private Coin  mXRP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,22 @@ public class MainActivity extends AppCompatActivity {
         mTvLtc= findViewById(R.id.tv_value_ltc);
         mTvXrp= findViewById(R.id.tv_value_xrp);
         mTvEth= findViewById(R.id.tv_value_eth);
+        mBtn= findViewById(R.id.btn_show);
+
+
+
+        mBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mBTC!=null){
+                Toast.makeText(getApplicationContext(),mBTC.getStringBuy(),Toast.LENGTH_LONG).show();
+                }else {
+                    Toast.makeText(getApplicationContext(),"0.00",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
+
 
 
 
@@ -91,15 +114,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected ArrayList<Coin> doInBackground(Void... strings) {
             ArrayList<Coin> coinsList=new ArrayList<>();
-            Coin  BTC = WebClient.getCoin("BTC");
-            Coin  ETH = WebClient.getCoin("ETH");
-            Coin  LTC = WebClient.getCoin("LTC");
-            Coin  XRP = WebClient.getCoin("XRP");
-            coinsList.add(BTC);
-            coinsList.add(ETH);
-            coinsList.add(LTC);
-            coinsList.add(XRP);
+            mBTC = WebClient.getCoin("BTC");
+            mETH = WebClient.getCoin("ETH");
+            mLTC = WebClient.getCoin("LTC");
+            mXRP = WebClient.getCoin("XRP");
+            coinsList.add(mBTC);
+            coinsList.add(mETH);
+            coinsList.add(mLTC);
+            coinsList.add(mXRP);
             cotacaoes=coinsList;
+            Log.i("BTC",cotacaoes.get(0).getStringBuy());
+            Log.i("ETH",cotacaoes.get(1).getStringBuy());
+            Log.i("XRP",cotacaoes.get(2).getStringBuy());
+            Log.i("LTC",cotacaoes.get(3).getStringBuy());
             return coinsList;
         }
 

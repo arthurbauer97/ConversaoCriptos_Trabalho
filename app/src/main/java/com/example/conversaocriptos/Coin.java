@@ -25,7 +25,7 @@ public class Coin implements Serializable {
     }
 
     public String  getStringBuy() {
-        return "R$ "+buy.toString();
+        return buy.toString();
     }
     public void setBuy(double buy) {
         this.buy = buy;
