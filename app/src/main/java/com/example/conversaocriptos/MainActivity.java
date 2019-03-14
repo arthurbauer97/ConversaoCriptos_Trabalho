@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                     String valorFinalltc = df.format(valorTotalltc);
                     String valorFinalbtc = df.format(valorTotalbtc);
                     String valorFinaleth = df.format(valorTotaleth);
+                    //oi
                     String valorFinalxrp = df.format(valorTotalxrp);
 
 
