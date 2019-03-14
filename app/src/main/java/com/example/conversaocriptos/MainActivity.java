@@ -9,9 +9,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,12 +25,25 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTvEth;
     private TextView mTvLtc;
     private TextView mTvXrp;
+
     private Button mBtn;
+
     private ArrayList<Coin> cotacaoes;
+
     private  Coin  mBTC;
     private Coin  mETH;
    private Coin  mLTC ;
     private Coin  mXRP;
+
+    private double valorTotalltc;
+    private double valorTotalbtc;
+    private double valorTotalxrp;
+    private double valorTotaleth;
+    DecimalFormat formato = new DecimalFormat("#.##");
+    private TextView valor;
+    private String valorPassado;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,38 +55,44 @@ public class MainActivity extends AppCompatActivity {
         mTvXrp= findViewById(R.id.tv_value_xrp);
         mTvEth= findViewById(R.id.tv_value_eth);
         mBtn= findViewById(R.id.btn_show);
-
-
+        valor = findViewById(R.id.numberText);
 
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mBTC!=null){
-                Toast.makeText(getApplicationContext(),mBTC.getStringBuy(),Toast.LENGTH_LONG).show();
+                if (valor.getText()!=null){
+                    String valorRecebido = valor.getText().toString();
+                    double quantidadeMoeda = Double.parseDouble(valorRecebido);
+
+                    valorTotalbtc =  quantidadeMoeda / mBTC.getBuy();
+                    valorTotaleth =  quantidadeMoeda / mETH.getBuy();
+                    valorTotalltc =  quantidadeMoeda / mLTC.getBuy();
+                    valorTotalxrp =  quantidadeMoeda / mXRP.getBuy();
+
+                    DecimalFormat df = new DecimalFormat("##0.00");
+
+                    String valorFinalltc = df.format(valorTotalltc);
+                    String valorFinalbtc = df.format(valorTotalbtc);
+                    String valorFinaleth = df.format(valorTotaleth);
+                    String valorFinalxrp = df.format(valorTotalxrp);
+
+
+                    TextView convxrp = findViewById(R.id.convxrp);
+                    TextView convltc = findViewById(R.id.convltc);
+                    TextView conveth = findViewById(R.id.conveth);
+                    TextView convbtc = findViewById(R.id.convbtc);
+
+                    convbtc.setText(valorFinalbtc);
+                    convltc.setText(valorFinalltc);
+                    conveth.setText(valorFinaleth);
+                    convxrp.setText(valorFinalxrp);
+
                 }else {
-                    Toast.makeText(getApplicationContext(),"0.00",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Digite um valor valido!",Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
 
     /*Não é necessario mexer aqui */
 
@@ -89,8 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this,"Loading Preços",Toast.LENGTH_LONG).show();
             startDownload();
-
-
         }
         return true;
     }

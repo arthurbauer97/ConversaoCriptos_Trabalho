@@ -29,10 +29,8 @@ public class WebClient {
             Log.e("REQUEST", e.getMessage());
         }
 
-
         return jsonDeResposta;
     }
-
 
     public static Coin getCurrenciesFromJson(String resposta,String nameCoin){
 
